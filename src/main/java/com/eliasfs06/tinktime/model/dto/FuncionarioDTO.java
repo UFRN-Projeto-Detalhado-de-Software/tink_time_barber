@@ -19,7 +19,7 @@ public class FuncionarioDTO {
     }
 
     public Funcionario toFuncionario(){
-        FuncionarioCreator factory = new ConcreteCreatorTatuador();
+        FuncionarioCreator factory = new ConcreteCreatorBarbeiro();
         Funcionario funcionario = factory.createFuncionario();
         funcionario.setAboutMe(this.aboutMe);
         funcionario.setAgenda(new Agenda());
