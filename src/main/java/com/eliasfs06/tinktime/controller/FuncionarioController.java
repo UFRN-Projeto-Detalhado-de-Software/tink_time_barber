@@ -62,7 +62,7 @@ public class FuncionarioController extends GenericController<Funcionario> {
 
         funcionarioService.save(funcionario.toFuncionario());
         model.addAttribute("funcionario", funcionario);
-//        model.addAttribute("allStyles", TattoStyle.getAllStyles());
+        model.addAttribute("allStyles", TattoStyle.getAllStyles());
 
         return "funcionario/profile";
     }
