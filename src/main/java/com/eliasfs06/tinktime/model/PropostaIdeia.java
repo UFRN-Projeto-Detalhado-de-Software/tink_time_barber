@@ -1,5 +1,6 @@
 package com.eliasfs06.tinktime.model;
 
+import com.eliasfs06.tinktime.model.enums.Corte;
 import jakarta.persistence.*;
 
 @Entity
@@ -24,6 +25,10 @@ public class PropostaIdeia extends BaseEntity {
 
     private Integer numeroSessoes;
 
+    private Corte corte;
+
+    @Lob
+    private byte[] referencia;
 
     @Override
     public Long getId() {
@@ -74,4 +79,19 @@ public class PropostaIdeia extends BaseEntity {
         this.numeroSessoes = numeroSessoes;
     }
 
+    public Corte getCorte() {
+        return corte;
+    }
+
+    public void setCorte(Corte corte) {
+        this.corte = corte;
+    }
+
+    public byte[] getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(byte[] referencia) {
+        this.referencia = referencia;
+    }
 }

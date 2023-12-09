@@ -1,6 +1,9 @@
 package com.eliasfs06.tinktime.model.dto;
 
 import com.eliasfs06.tinktime.model.PropostaIdeia;
+import com.eliasfs06.tinktime.model.enums.Corte;
+
+import java.text.ParseException;
 
 public class PropostaIdeiaDTO {
 
@@ -12,6 +15,11 @@ public class PropostaIdeiaDTO {
 
     private String descricao;
 
+    private Corte corte;
+
+    private byte[] referencia;
+
+
     public PropostaIdeiaDTO() {
     }
 
@@ -22,10 +30,22 @@ public class PropostaIdeiaDTO {
         this.descricao = propostaIdeia.getDescricao();
     }
 
-    public PropostaIdeiaDTO(UserDTO cliente, UserDTO tatuador, String descricao) {
+    public PropostaIdeiaDTO(UserDTO cliente, UserDTO tatuador, String descricao, byte[] referencia, Corte corte) {
         this.cliente = cliente;
         this.tatuador = tatuador;
         this.descricao = descricao;
+        this.referencia = referencia;
+        this.corte = corte;
+    }
+
+    public PropostaIdeia toPropostaIdeia() throws ParseException {
+        PropostaIdeia propostaIdeia = new PropostaIdeia();
+        propostaIdeia.setCliente(this.cliente.toUser());
+        propostaIdeia.setTatuador(this.tatuador.toUser());
+        propostaIdeia.setDescricao(this.descricao);
+        propostaIdeia.setReferencia(this.referencia);
+        propostaIdeia.setCorte(this.corte);
+        return propostaIdeia;
     }
 
     public Long getId() {
@@ -58,5 +78,21 @@ public class PropostaIdeiaDTO {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Corte getCorte() {
+        return corte;
+    }
+
+    public void setCorte(Corte corte) {
+        this.corte = corte;
+    }
+
+    public byte[] getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(byte[] referencia) {
+        this.referencia = referencia;
     }
 }

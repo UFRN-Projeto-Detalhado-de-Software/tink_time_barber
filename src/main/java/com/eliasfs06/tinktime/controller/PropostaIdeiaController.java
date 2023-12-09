@@ -3,6 +3,7 @@ package com.eliasfs06.tinktime.controller;
 import com.eliasfs06.tinktime.exceptionsHandler.BusinessException;
 import com.eliasfs06.tinktime.model.*;
 import com.eliasfs06.tinktime.model.dto.*;
+import com.eliasfs06.tinktime.model.enums.Corte;
 import com.eliasfs06.tinktime.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -57,19 +59,23 @@ public class PropostaIdeiaController {
         List<Funcionario> funcionarios = funcionarioService.listActiveFuncionarios();
         modelAndView.addObject("newIdeia", new PropostaIdeiaDTO());
         modelAndView.addObject("funcionarios", funcionarios);
+        modelAndView.addObject("cortes", Corte.values());
         modelAndView.setViewName("propostaIdeia/form");
         return modelAndView;
     }
 
     @PostMapping("/create")
     public String create(@RequestParam(value="descricao", required = true) String Descricao, @RequestParam(value="tatuador", required = true) String Funcionario,
+                         @RequestParam(value="referencia", required = true) byte[] referencia, String corte,
                          Model model) throws BusinessException {
         try {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User funcionario = userService.findByID(Long.parseLong(Funcionario));
-            propostaIdeiaService.create(new PropostaIdeiaDTO(new UserDTO(user), new UserDTO(funcionario), Descricao));
+            propostaIdeiaService.create(new PropostaIdeiaDTO(new UserDTO(user), new UserDTO(funcionario), Descricao, referencia, Corte.valueOf(corte)));
         } catch (BusinessException e) {
             return "redirect:/index";
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return "redirect:/index";
     }

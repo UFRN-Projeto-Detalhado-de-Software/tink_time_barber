@@ -21,6 +21,8 @@
                 <tr>
                     <th>Descricao</th>
                     <th>Cliente</th>
+                    <th>Corte</th>
+                    <th>Referênca</th>
                     <th>Agendamento</th>
                 </tr>
                 </thead>
@@ -28,6 +30,10 @@
                 <tr th:each="proposta : ${propostasList}">
                     <td th:text="${proposta.descricao}"></td>
                     <td th:text="${proposta.cliente.person.name}"></td>
+                    <td th:text="${proposta.corte.corte}"></td>
+                    <td>
+                        <img th:src="'data:image/jpeg;charset=utf-8;base64,' + ${proposta.referencia}" alt="Imagem">
+                    </td>
                     <td th:if="${proposta.agendamento != null}"
                         th:text="'Dia ' + ${proposta.agendamento.data} + ' às ' + ${proposta.agendamento.horarios.get(0).getHoraInicio()}"></td>
                     <td th:if="${proposta.agendamento == null}"><a th:href="@{/proposta-ideia/buscar-horarios/{id}(id=${proposta.id})}">Agendar</a></td>
