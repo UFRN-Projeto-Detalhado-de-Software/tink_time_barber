@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -25,8 +25,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="tatuagem">Proposta de Tatuagem:</label>
-                    <select id="tatuagem" name="tatuagem" class="form-select" th:field="*{propostaOrcamento.propostaTatuagem}">
+                    <label for="ideia">Proposta de Tatuagem:</label>
+                    <select id="ideia" name="ideia" class="form-select" th:field="*{propostaOrcamento.propostaIdeia}">
                         <option value="">-- Selecione --</option>
                     </select>
                 </div>
@@ -54,8 +54,8 @@
     $('#cliente').change(function () {
         var clienteId = $(this).val();
         if (clienteId) {
-            $.get('/proposta-tatuagem/getPropostasByCliente?clienteId=' + clienteId, function (propostas) {
-                var propostaDropdown = $('#tatuagem');
+            $.get('/proposta-ideia/getPropostasByCliente?clienteId=' + clienteId, function (propostas) {
+                var propostaDropdown = $('#ideia');
                 propostaDropdown.empty();
                 propostaDropdown.append($('<option>').text('-- Selecione --'));
                 $.each(propostas, function (i, proposta) {
@@ -65,10 +65,10 @@
         }
     });
 
-    $('#tatuagem').change(function () {
+    $('#ideia').change(function () {
         var tatuagemId = $(this).val();
         if (tatuagemId) {
-            $.get('/proposta-orcamento/getOrcamentosAprovadosByTatuagem?tatuagemId=' + tatuagemId, function (propostas) {
+            $.get('/proposta-orcamento/getOrcamentosAprovadosByIdeia?ideiaId=' + tatuagemId, function (propostas) {
                 var propostaOrcamentoDropdown = $('#propostaOrcamento');
                 propostaOrcamentoDropdown.empty();
                 propostaOrcamentoDropdown.append($('<option>').text('-- Selecione --'));

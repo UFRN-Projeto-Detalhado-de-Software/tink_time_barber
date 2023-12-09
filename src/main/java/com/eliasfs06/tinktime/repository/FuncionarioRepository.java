@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FuncionaroRepository extends GenericRepository<Funcionario> {
+public interface FuncionarioRepository extends GenericRepository<Funcionario> {
 
     @Query(value = "SELECT func FROM Funcionario func WHERE func.user = ?1 AND func.active = true", nativeQuery = false)
     Funcionario findByUser(User user);

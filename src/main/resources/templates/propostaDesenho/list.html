@@ -29,8 +29,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="proposta, i : ${propostaDesenhos}">
-                    <td th:text="${proposta.propostaOrcamento.propostaTatuagem.getTatuador().getPerson().getName()}"> </td>
-                    <td th:text="${proposta.propostaOrcamento.propostaTatuagem.descricao}"></td>
+                    <td th:text="${proposta.propostaOrcamento.propostaIdeia.getTatuador().getPerson().getName()}"> </td>
+                    <td th:text="${proposta.propostaOrcamento.propostaIdeia.descricao}"></td>
                     <td th:text="${proposta.propostaOrcamento.orcamento}"></td>
                     <td>
                         <img th:src="'data:image/jpeg;charset=utf-8;base64,' + ${imagensBase64[i.index]}" alt="Imagem">

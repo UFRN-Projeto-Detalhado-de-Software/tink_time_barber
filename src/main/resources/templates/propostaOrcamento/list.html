@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="proposta : ${propostasList}">
-                    <td th:text="${proposta.propostaTatuagem.descricao}"></td>
+                    <td th:text="${proposta.propostaIdeia.descricao}"></td>
                     <td th:text="${proposta.orcamento}"></td>
                     <td th:text="${proposta.statusAprovacao.getDenominacao()}"></td>
                     <td>

@@ -4,10 +4,10 @@ import ch.qos.logback.core.model.Model;
 import com.eliasfs06.tinktime.exceptionsHandler.BusinessException;
 import com.eliasfs06.tinktime.model.*;
 import com.eliasfs06.tinktime.model.dto.PropostaOrcamentoDTO;
-import com.eliasfs06.tinktime.model.dto.PropostaTatuagemDTO;
+import com.eliasfs06.tinktime.model.dto.PropostaIdeiaDTO;
 import com.eliasfs06.tinktime.service.ClientService;
 import com.eliasfs06.tinktime.service.PropostaOrcamentoService;
-import com.eliasfs06.tinktime.service.PropostaTatuagemService;
+import com.eliasfs06.tinktime.service.PropostaIdeiaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class PropostaOrcamentoController {
     private ClientService clientService;
 
     @Autowired
-    private PropostaTatuagemService propostaTatuagemService;
+    private PropostaIdeiaService propostaIdeiaService;
 
 
     @GetMapping("/list")
@@ -51,12 +51,12 @@ public class PropostaOrcamentoController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestParam(value="propostaTatuagem", required = true) String tatuagem,
+    public String create(@RequestParam(value="propostaIdeia", required = true) String ideia,
                          @RequestParam(value="orcamento", required = true) String orcamento,
                          Model model) throws BusinessException {
         try {
-            PropostaTatuagemDTO propostaTatuagem = propostaTatuagemService.findById(Long.parseLong(tatuagem));
-            propostaOrcamentoService.create(new PropostaOrcamentoDTO(propostaTatuagem, Float.parseFloat(orcamento)));
+            PropostaIdeiaDTO propostaIdeia = propostaIdeiaService.findById(Long.parseLong(ideia));
+            propostaOrcamentoService.create(new PropostaOrcamentoDTO(propostaIdeia, Float.parseFloat(orcamento)));
 
         } catch (BusinessException e) {
             return "redirect:/index";
@@ -64,10 +64,10 @@ public class PropostaOrcamentoController {
         return "redirect:/index";
     }
 
-    @GetMapping("/getOrcamentosAprovadosByTatuagem")
+    @GetMapping("/getOrcamentosAprovadosByIdeia")
     @ResponseBody
-    public List<PropostaOrcamento> getOrcamentosAprovadosByTatuagem(@RequestParam Long tatuagemId) {
-        return propostaOrcamentoService.findAllByStatusAprovacaoAndPropostaTatuagemId(tatuagemId);
+    public List<PropostaOrcamento> getOrcamentosAprovadosByIdeia(@RequestParam Long ideiaId) {
+        return propostaOrcamentoService.findAllByStatusAprovacaoAndPropostaIdeiaId(ideiaId);
     }
 
     @GetMapping("/recusar/{id}")

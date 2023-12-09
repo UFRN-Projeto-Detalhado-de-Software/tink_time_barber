@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2>Enviar Proposta de tatuagem</h2>
-            <form th:action="@{/proposta-tatuagem/create}" method="post" th:object="${newTatuagem}">
+            <form th:action="@{/proposta-ideia/create}" method="post" th:object="${newIdeia}">
                 <div class="form-group">
                     <label for="tatuador">Funcionário:</label>
                     <select id="tatuador" name="tatuador" class="form-select" th:field="*{tatuador}">

@@ -3,7 +3,7 @@ package com.eliasfs06.tinktime.model;
 import jakarta.persistence.*;
 
 @Entity
-public class PropostaTatuagem extends BaseEntity {
+public class PropostaIdeia extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,4 +73,5 @@ public class PropostaTatuagem extends BaseEntity {
     public void setNumeroSessoes(Integer numeroSessoes) {
         this.numeroSessoes = numeroSessoes;
     }
+
 }

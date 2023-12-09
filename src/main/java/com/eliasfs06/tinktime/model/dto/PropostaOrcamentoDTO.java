@@ -1,12 +1,11 @@
 package com.eliasfs06.tinktime.model.dto;
 
 import com.eliasfs06.tinktime.model.PropostaOrcamento;
-import com.eliasfs06.tinktime.model.PropostaTatuagem;
 
 public class PropostaOrcamentoDTO {
     private Long id;
 
-    private PropostaTatuagemDTO propostaTatuagem;
+    private PropostaIdeiaDTO propostaIdeia;
 
     private Float orcamento;
 
@@ -14,12 +13,12 @@ public class PropostaOrcamentoDTO {
 
     public PropostaOrcamentoDTO(PropostaOrcamento propostaOrcamento){
         this.id = propostaOrcamento.getId();
-        this.propostaTatuagem = new PropostaTatuagemDTO(propostaOrcamento.getPropostaTatuagem());
+        this.propostaIdeia = new PropostaIdeiaDTO(propostaOrcamento.getPropostaIdeia());
         this.orcamento = propostaOrcamento.getOrcamento();
     }
 
-    public PropostaOrcamentoDTO(PropostaTatuagemDTO propostaTatuagem, Float orcamento) {
-        this.propostaTatuagem = propostaTatuagem;
+    public PropostaOrcamentoDTO(PropostaIdeiaDTO propostaIdeia, Float orcamento) {
+        this.propostaIdeia = propostaIdeia;
         this.orcamento = orcamento;
     }
 
@@ -31,12 +30,12 @@ public class PropostaOrcamentoDTO {
         this.id = id;
     }
 
-    public PropostaTatuagemDTO getPropostaTatuagem() {
-        return propostaTatuagem;
+    public PropostaIdeiaDTO getPropostaIdeia() {
+        return propostaIdeia;
     }
 
-    public void setPropostaTatuagem(PropostaTatuagemDTO propostaTatuagem) {
-        this.propostaTatuagem = propostaTatuagem;
+    public void setPropostaIdeia(PropostaIdeiaDTO propostaIdeia) {
+        this.propostaIdeia = propostaIdeia;
     }
 
     public Float getOrcamento() {
