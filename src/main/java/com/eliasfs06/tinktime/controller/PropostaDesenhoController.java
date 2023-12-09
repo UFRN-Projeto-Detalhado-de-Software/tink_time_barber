@@ -5,12 +5,12 @@ import com.eliasfs06.tinktime.exceptionsHandler.BusinessException;
 import com.eliasfs06.tinktime.model.*;
 import com.eliasfs06.tinktime.model.dto.PropostaDesenhoDTO;
 import com.eliasfs06.tinktime.model.dto.PropostaOrcamentoDTO;
-import com.eliasfs06.tinktime.model.dto.PropostaTatuagemDTO;
+import com.eliasfs06.tinktime.model.dto.PropostaIdeiaDTO;
 import com.eliasfs06.tinktime.model.enums.StatusAprovacao;
 import com.eliasfs06.tinktime.service.ClientService;
 import com.eliasfs06.tinktime.service.PropostaDesenhoService;
 import com.eliasfs06.tinktime.service.PropostaOrcamentoService;
-import com.eliasfs06.tinktime.service.PropostaTatuagemService;
+import com.eliasfs06.tinktime.service.PropostaIdeiaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ public class PropostaDesenhoController {
     private ClientService clientService;
 
     @Autowired
-    private PropostaTatuagemService propostaTatuagemService;
+    private PropostaIdeiaService propostaIdeiaService;
 
     @Autowired
     private PropostaOrcamentoService propostaOrcamentoService;
@@ -59,19 +59,19 @@ public class PropostaDesenhoController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestParam(value="propostaOrcamento.propostaTatuagem", required = true) String tatuagem,
+    public String create(@RequestParam(value= "propostaOrcamento.propostaIdeia", required = true) String ideia,
                          @RequestParam(value="propostaOrcamento", required = true) String orcamento,
                          PropostaDesenho propostaDesenho,
                          Model model) throws BusinessException {
         try {
-            PropostaTatuagemDTO propostaTatuagem = propostaTatuagemService.findById(Long.parseLong(tatuagem));
+            PropostaIdeiaDTO propostaIdeia = propostaIdeiaService.findById(Long.parseLong(ideia));
             PropostaOrcamentoDTO propostaOrcamento = propostaOrcamentoService.findById(Long.parseLong(orcamento));
-            propostaOrcamento.setPropostaTatuagem(propostaTatuagem);
+            propostaOrcamento.setPropostaIdeia(propostaIdeia);
             propostaDesenhoService.create(new PropostaDesenhoDTO(propostaDesenho.getDesenho(), propostaOrcamento, StatusAprovacao.PENDENTE.name()));
 
-            PropostaTatuagem proposta = propostaDesenho.getPropostaOrcamento().getPropostaTatuagem();
+            PropostaIdeia proposta = propostaDesenho.getPropostaOrcamento().getPropostaIdeia();
             proposta.setNumeroSessoes(propostaDesenho.getNumeroSessoes());
-            propostaTatuagemService.save(proposta);
+            propostaIdeiaService.save(proposta);
 
         } catch (BusinessException e) {
             return "redirect:/index";

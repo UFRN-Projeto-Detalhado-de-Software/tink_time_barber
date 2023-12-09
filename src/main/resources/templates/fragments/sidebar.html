@@ -18,10 +18,10 @@
         <a class="nav-link" th:href="@{/funcionario/list}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')">Listar Funcionários</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/proposta-tatuagem/form}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')">Enviar Propostas de Tatuagem</a>
+        <a class="nav-link" th:href="@{/proposta-ideia/form}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')">Enviar Propostas de Tatuagem</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/proposta-tatuagem/list}" sec:authorize="hasAnyRole('ROLE_CLIENT')">Verificar Propostas de Tatuagem</a>
+        <a class="nav-link" th:href="@{/proposta-ideia/list}" sec:authorize="hasAnyRole('ROLE_CLIENT')">Verificar Propostas de Tatuagem</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" th:href="@{/proposta-orcamento/list}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')">Verificar Propostas de Orçamento</a>
@@ -32,7 +32,7 @@
 
       <!-- Funções para os funcionários -->
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/proposta-tatuagem/list}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">Verificar Propostas de Tatuagem</a>
+        <a class="nav-link" th:href="@{/proposta-ideia/list}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">Verificar Propostas de Tatuagem</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" th:href="@{/proposta-orcamento/form}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">Enviar Propostas de Orçamento</a>

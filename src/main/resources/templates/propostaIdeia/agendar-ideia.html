@@ -16,7 +16,7 @@
     <div class="col-3" th:each="dia : ${horarios}">
       <div class="card m-2">
         <div class="card-body">
-           <form th:action="@{/proposta-tatuagem/agendar-tatuagem/{propostaId}/{agendaId}(propostaId=${propostaId}, agendaId=${agendaId})}"
+           <form th:action="@{/proposta-ideia/agendar-tatuagem/{propostaId}/{agendaId}(propostaId=${propostaId}, agendaId=${agendaId})}"
                  method="post" th:object="${agendamento}">
             <input type="hidden" name="diaAgenda" th:value="${dia.diaAgenda.dia}">
             <input type="hidden" name="horaIncio" th:value="${dia.horarios.get(0).horaInicio}">

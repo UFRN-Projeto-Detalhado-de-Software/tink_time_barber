@@ -16,11 +16,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
-@RequestMapping("/proposta-tatuagem")
-public class PropostaTatuagemController {
+@RequestMapping("/proposta-ideia")
+public class PropostaIdeiaController {
 
     @Autowired
-    private PropostaTatuagemService propostaTatuagemService;
+    private PropostaIdeiaService propostaIdeiaService;
 
     @Autowired
     private FuncionarioService funcionarioService;
@@ -44,9 +44,9 @@ public class PropostaTatuagemController {
     public ModelAndView listTatuagens(){
         ModelAndView modelAndView = new ModelAndView();
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<PropostaTatuagem> propostasList = propostaTatuagemService.getPropostasByRole(user);
+        List<PropostaIdeia> propostasList = propostaIdeiaService.getPropostasByRole(user);
         modelAndView.addObject("propostasList", propostasList);
-        modelAndView.setViewName("propostaTatuagem/list");
+        modelAndView.setViewName("propostaIdeia/list");
         return modelAndView;
     }
 
@@ -55,9 +55,9 @@ public class PropostaTatuagemController {
     public ModelAndView form() {
         ModelAndView modelAndView = new ModelAndView();
         List<Funcionario> funcionarios = funcionarioService.listActiveFuncionarios();
-        modelAndView.addObject("newTatuagem", new PropostaTatuagemDTO());
+        modelAndView.addObject("newIdeia", new PropostaIdeiaDTO());
         modelAndView.addObject("funcionarios", funcionarios);
-        modelAndView.setViewName("propostaTatuagem/form");
+        modelAndView.setViewName("propostaIdeia/form");
         return modelAndView;
     }
 
@@ -67,7 +67,7 @@ public class PropostaTatuagemController {
         try {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User funcionario = userService.findByID(Long.parseLong(Funcionario));
-            propostaTatuagemService.create(new PropostaTatuagemDTO(new UserDTO(user), new UserDTO(funcionario), Descricao));
+            propostaIdeiaService.create(new PropostaIdeiaDTO(new UserDTO(user), new UserDTO(funcionario), Descricao));
         } catch (BusinessException e) {
             return "redirect:/index";
         }
@@ -76,25 +76,25 @@ public class PropostaTatuagemController {
 
     @GetMapping("/getPropostasByCliente")
     @ResponseBody
-    public List<PropostaTatuagem> getPropostasByCliente(@RequestParam Long clienteId) {
-        return propostaTatuagemService.listPropostasByClienteID(clienteId);
+    public List<PropostaIdeia> getPropostasByCliente(@RequestParam Long clienteId) {
+        return propostaIdeiaService.listPropostasByClienteID(clienteId);
     }
 
     @GetMapping("/buscar-horarios/{id}")
     public String agendarTatuagem(@PathVariable Long id, Model model){
-        PropostaTatuagem propostaTatuagem = propostaTatuagemService.get(id);
-        FuncionarioDTO funcionarioDTO = funcionarioService.findByUser(propostaTatuagem.getTatuador());
+        PropostaIdeia propostaIdeia = propostaIdeiaService.get(id);
+        FuncionarioDTO funcionarioDTO = funcionarioService.findByUser(propostaIdeia.getTatuador());
         Funcionario funcionario = funcionarioDTO.toFuncionario();
         Agenda agenda = agendaService.findByFuncionario(funcionario);
 
-        List<HorariosTatuagem> horariosDisponveis = agendaService.sugerirHorarios(funcionario, propostaTatuagem.getNumeroSessoes());
-        List<HorariosTatuagem> horariosDisponiveisFormatados = agendaService.formatarHorariosDisponiveis(horariosDisponveis, propostaTatuagem.getNumeroSessoes());
+        List<HorariosTatuagem> horariosDisponveis = agendaService.sugerirHorarios(funcionario, propostaIdeia.getNumeroSessoes());
+        List<HorariosTatuagem> horariosDisponiveisFormatados = agendaService.formatarHorariosDisponiveis(horariosDisponveis, propostaIdeia.getNumeroSessoes());
 
         model.addAttribute("horarios", horariosDisponiveisFormatados);
         model.addAttribute("agendaId", agenda.getId());
         model.addAttribute("propostaId", id);
         model.addAttribute("agendamento", new AgendamentoDto());
-        return "/propostaTatuagem/agendar-tatuagem";
+        return "/propostaIdeia/agendar-ideia";
     }
 
     @PostMapping("/agendar-tatuagem/{idProposta}/{idAgenda}")
@@ -114,9 +114,9 @@ public class PropostaTatuagemController {
         agendamento.setData(diaAgenda.getDia());
         agendamentoService.save(agendamento);
 
-        PropostaTatuagem propostaTatuagem = propostaTatuagemService.get(idProposta);
-        propostaTatuagem.setAgendamento(agendamento);
-        propostaTatuagemService.save(propostaTatuagem);
+        PropostaIdeia propostaIdeia = propostaIdeiaService.get(idProposta);
+        propostaIdeia.setAgendamento(agendamento);
+        propostaIdeiaService.save(propostaIdeia);
 
         return "redirect:/index";
     }
