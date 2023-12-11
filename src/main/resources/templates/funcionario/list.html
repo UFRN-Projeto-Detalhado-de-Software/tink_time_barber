@@ -21,12 +21,18 @@
                     <tr>
                         <th>Nome</th>
                         <th>Descrição</th>
+                        <th>Barbearia</th>
+                        <th>Serviços</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="funcionario : ${funcionarioList}">
                         <td th:text="${funcionario.user.person.name}"></td>
                         <td th:text="${funcionario.aboutMe}"></td>
+                        <td th:text="${funcionario.barbearia}"></td>
+                        <td>
+                            <span th:each="servico : ${funcionario.servicos}" th:text="${servico.description} + '; '"></span>
+                        </td>
                     </tr>
                 </tbody>
             </table>

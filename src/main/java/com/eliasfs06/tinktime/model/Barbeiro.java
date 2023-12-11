@@ -2,12 +2,14 @@ package com.eliasfs06.tinktime.model;
 
 import jakarta.persistence.Entity;
 
+import java.util.List;
+
 @Entity
 public class Barbeiro extends Funcionario {
 
     String barbearia;
 
-    String tiposServico;
+    List<TipoServico> servicos;
 
     public String getBarbearia() {
         return barbearia;
@@ -17,11 +19,11 @@ public class Barbeiro extends Funcionario {
         this.barbearia = barbearia;
     }
 
-    public String getTiposServico() {
-        return tiposServico;
+    public List<TipoServico> getServicos() {
+        return servicos;
     }
 
-    public void setTiposServico(String tiposServico) {
-        this.tiposServico = tiposServico;
+    public void setServicos(List<TipoServico> servicos) {
+        this.servicos = servicos;
     }
 }

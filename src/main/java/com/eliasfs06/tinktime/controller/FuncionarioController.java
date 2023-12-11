@@ -1,6 +1,7 @@
 package com.eliasfs06.tinktime.controller;
 
 import com.eliasfs06.tinktime.model.*;
+import com.eliasfs06.tinktime.model.dto.BarbeiroDTO;
 import com.eliasfs06.tinktime.model.dto.FuncionarioDTO;
 import com.eliasfs06.tinktime.model.dto.FormCadastroHorarios;
 import com.eliasfs06.tinktime.repository.GenericRepository;
@@ -44,24 +45,26 @@ public class FuncionarioController extends GenericController<Funcionario> {
     @GetMapping("/profile")
     public String getProfile(Model model){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        FuncionarioDTO funcionario = funcionarioService.findByUser(user);
+        BarbeiroDTO barbeiro = (BarbeiroDTO) funcionarioService.findByUser(user);
 
-        if(funcionario.getId() == null){
-            funcionario.setUser(user);
+        if(barbeiro.getId() == null){
+            barbeiro.setUser(user);
         }
 
-        model.addAttribute("funcionario", funcionario);
+        model.addAttribute("barbeiro", barbeiro);
+        model.addAttribute("listaServicos", TipoServico.getAllServicos());
         return "funcionario/profile";
     }
 
     @PostMapping("/profile")
-    public String saveProfile(@ModelAttribute("funcionario") @Valid FuncionarioDTO funcionario, BindingResult br, Model model){
+    public String saveProfile(@ModelAttribute("barbeiro") @Valid Barbeiro barbeiro, BindingResult br, Model model){
         if(br.hasErrors()){
             return "funcionario/profile";
         }
 
-        funcionarioService.save(funcionario.toFuncionario());
-        model.addAttribute("funcionario", funcionario);
+        funcionarioService.save(barbeiro);
+        model.addAttribute("barbeiro", barbeiro);
+        model.addAttribute("listaServicos", TipoServico.getAllServicos());
         return "funcionario/profile";
     }
 
