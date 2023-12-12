@@ -7,7 +7,9 @@ import com.eliasfs06.tinktime.model.UserRole;
 import com.eliasfs06.tinktime.model.dto.RegisterDTO;
 import com.eliasfs06.tinktime.repository.GenericRepository;
 import com.eliasfs06.tinktime.repository.UserRepository;
+import com.eliasfs06.tinktime.service.suggestionObserver.SuggestionObserver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ public class UserService extends GenericService<User>{
     private FuncionarioService funcionarioService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private SuggestionObserver suggestionObserver;
 
     public UserService(GenericRepository<User> userRepository) {
         super(userRepository);
@@ -49,11 +53,18 @@ public class UserService extends GenericService<User>{
 
     private void createEntityBaseOnUserRole(User user) {
         if(user.getUserRole() == UserRole.EMPLOYEE){
-            funcionarioService.createFuncionario(user);
+            Funcionario funcionario = funcionarioService.createFuncionario(user);
+            suggestionObserver.setTargetClients(user.getPerson().getUfResidencia());
+            suggestionObserver.notifyTargetClients(funcionario);
         }
         if(user.getUserRole() == UserRole.CLIENT){
             clientService.createClient(user);
         }
+    }
+
+    public UserRole getRoleUsuarioLogago(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getUserRole();
     }
 
     public void encodePassword(User user){
