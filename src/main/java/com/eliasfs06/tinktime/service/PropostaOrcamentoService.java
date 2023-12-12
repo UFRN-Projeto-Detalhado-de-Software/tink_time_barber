@@ -42,7 +42,7 @@ public class PropostaOrcamentoService extends GenericService<PropostaOrcamento> 
             throw new BusinessException("Orçamento não pode ser nulo");
 
         if (propostaOrcamentoDTO.getPropostaIdeia().getCliente() == null || propostaOrcamentoDTO.getPropostaIdeia().getTatuador() == null || propostaOrcamentoDTO.getPropostaIdeia().getDescricao() == null)
-            throw new BusinessException("Proposta de tatuagem do orçamento não está bem estruturada");
+            throw new BusinessException("Proposta de Corte do orçamento não está bem estruturada");
 
         User cliente = userRepository.findById(propostaOrcamentoDTO.getPropostaIdeia().getCliente().getId()).orElse(null);
         User tatuador = userRepository.findById(propostaOrcamentoDTO.getPropostaIdeia().getTatuador().getId()).orElse(null);
@@ -55,7 +55,7 @@ public class PropostaOrcamentoService extends GenericService<PropostaOrcamento> 
         PropostaIdeia propostaIdeia = propostaIdeiaRepository.findPropostaIdeiaByClienteAndTatuadorAndDescricao(cliente, tatuador, descricao);
 
         if (propostaIdeia == null) {
-            throw new BusinessException("Proposta de tatuagem inválida");
+            throw new BusinessException("Proposta de Corte inválida");
         }
 
         propostaOrcamento.setPropostaIdeia(propostaIdeia);
