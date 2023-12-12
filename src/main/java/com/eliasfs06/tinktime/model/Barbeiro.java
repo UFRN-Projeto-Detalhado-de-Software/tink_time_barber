@@ -1,6 +1,9 @@
 package com.eliasfs06.tinktime.model;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import java.util.List;
 
@@ -9,6 +12,8 @@ public class Barbeiro extends Funcionario {
 
     String barbearia;
 
+    @Enumerated(EnumType.STRING)
+    @ElementCollection
     List<TipoServico> servicos;
 
     public String getBarbearia() {
